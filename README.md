@@ -1,6 +1,6 @@
-# base
+# ex4
 
-> a vue demo
+> shopping cart with no routes
 
 ## Build Setup
 

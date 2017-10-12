@@ -157,7 +157,7 @@ var app5 = new Vue({
 #### 2.5 Composing with Components
 The component system is another important concept in Vue, because it’s an abstraction that allows us to build large-scale applications composed of small, self-contained, and often reusable components. If we think about it, almost any type of application interface can be abstracted into a tree of components:
 
-![Alt text](.picture/components.png)
+![Alt text](.https://github.com/at-quando/Vue.js-Studying/tree/VueJS-basic/picture/components.png)
 
 
 

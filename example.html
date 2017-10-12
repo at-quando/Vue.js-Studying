@@ -49,15 +49,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(user, i) in searchUser(users, search) ">
+            <tr v-for="(user, i) in searchUser(users, search) " :key="i">
               <th scope="row">{{i}}</th>
               <td>{{user.fn | capitalize }} </td>
               <td>{{user.ln | capitalize}} </td>
               <!-- <td>{{user| formName}}</td> -->
               <td>{{user.email}}</td>
               <td>
-                <button type="button" class="btn btn-danger btn-sm" @click="deleteUser(i)"><i class="fa fa-window-close" aria-hidden="true"></i></button>
                 <button type="button" class="btn btn-success btn-sm" @click="editUser(i)"><i class="fa fa-pencil-square" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-danger btn-sm" @click="deleteUser(i)"><i class="fa fa-window-close" aria-hidden="true"></i></button>
               </td>
             </tr>
           </tbody>
@@ -161,7 +161,7 @@
           },
           methods: {
             deleteUser: (id) => {
-              listUser.splice(id);
+              listUser.splice(id, 1);
               submit.reset();
             },
             searchUser: (listUser, key) => {
@@ -177,7 +177,7 @@
       }
     </script>
 
-    <script language="javascript" src="https://unpkg.com/vue"></script>
+    <script language="javascript" src="/home/hoangnguyenl/ResearchIT/VueJS/I/vue.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
       crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"

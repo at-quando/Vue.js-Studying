@@ -159,16 +159,72 @@ The component system is another important concept in Vue, because it’s an abst
 
 ![Alt text](https://github.com/at-quando/Vue.js-Studying/blob/VueJS-basic/picture/components.png)
 
+In Vue, a component is essentially a Vue instance with pre-defined options. Registering a component in Vue is straightforward:
 
+```javascript
+Vue.component('app-hello', {
+  template: '<div>Hello world</div>'
+})
+```
+Now you can compose it in another component’s template:
+```javascript
+<div>
+  <!-- Create an instance of the todo-item component -->
+  <app-hello></app-hello>
+</div>
+```
 
+But this would render the same text for every todo, which is not super interesting. We should be able to pass data from the parent scope into child components. Let’s modify the component definition to make it accept a prop:
 
+```javascript
+Vue.component('todo-item', {
+  // The todo-item component now accepts a
+  // "prop", which is like a custom attribute.
+  // This prop is called todo.
+  props: ['todo'],
+  template: '<li>{{ todo.text }}</li>'
+})
+```
+Now we can pass the todo into each repeated component using v-bind:
 
+```html
+<div id="app-6">
+  <ol>
+    <!--
+      Now we provide each todo-item with the todo object
+      it's representing, so that its content can be dynamic.
+      We also need to provide each component with a "key",
+      which will be explained later.
+    -->
+    <todo-item
+      v-for="skill in skills"
+      v-bind:todo="skill"
+      v-bind:key="skill.id">
+    </todo-item>
+  </ol>
+</div>
+```
 
-
+```javascript
+Vue.component('todo-item', {
+  props: ['todo'],
+  template: '<li>{{ todo.text }}</li>'
+})
+var app6 = new Vue({
+  el: '#app-6',
+  data: {
+    skills: [
+      { id: 0, skill: 'html' },
+      { id: 1, skill: 'css' },
+      { id: 2, skill: 'javascript' }
+    ]
+  }
+})
+```
 
 -----------------------------------------------
-### 2. The Vue Instance
-#### 2.1 Creating a Vue Instance
+### 3. The Vue Instance
+#### 3.1 Creating a Vue Instance
 very Vue.js app is bootstrapped by creating a root **Vue** instance with the Vue constructor function:
 
 ```javascript
@@ -178,10 +234,10 @@ var vm = new Vue({
 console.log(vm) // To see more vue instance
 ```
 A **Vue** instance is essentially a ViewModel(vm) as defined in the MVVM pattern. When you instantiate a Vue instance, you need to pass in an options object which can contain options for *data*, *template*, *element* to mount on, *methods*, *lifecycle callbacks* and more. 
-
+When you create a Vue instance, you pass in an options object. The majority of this guide describes how you can use these options to create your desired behavior. For reference, you can also browse the full list of options in the ![API reference](https://vuejs.org/v2/api/#Options-Data).
 -----------------------------------------------
-## Properties and Methods
-All the properties and methods you want to include Vue must be through the key **data** at initialization. This key **data** is called Proxies for Vue instance when the newly initiated.
+## Data and Methods
+When a Vue instance is created, it adds all the properties found in its data object to Vue’s reactivity system. When the values of those properties change, the view will “react”, updating to match the new values.
 ```javascript
 var vm = new Vue({
     data : {
@@ -191,6 +247,28 @@ var vm = new Vue({
       }
     }
 });
- console.log(vm.$domain) #=> hello
- vn.
+ console.log(vm.greet); #=> hello
+ vn.greetUse('world'); #=> hello world
+
+ vm.greet = 'front end';
+ console.log(vm.greet);  #=> front end
 ```
+
+In addition to data properties, Vue instances expose a number of useful instance properties and methods. These are prefixed with $ to differentiate them from user-defined properties. For example:
+
+```javascript
+var data = { a: 1 }
+var vm = new Vue({
+  el: '#example',
+  data: data
+})
+vm.$data === data // => true
+vm.$el === document.getElementById('example') // => true
+// $watch is an instance method
+vm.$watch('a', function (newValue, oldValue) {
+  // This callback will be called when `vm.a` changes
+})
+```
+
+#### 3.3 Instance Lifecycle Hooks
+

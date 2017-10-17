@@ -1,6 +1,6 @@
-# base
+# ex3
 
-> a vue demo
+> shopping cart
 
 ## Build Setup
 
